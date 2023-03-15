@@ -1,6 +1,6 @@
 const fs = require('fs')
 const toys = require('../data/toy.json')
-
+const PAGE_SIZE=9
 module.exports = {
     query,
     getById,
@@ -78,6 +78,9 @@ console.log('',filterBy.sortBy);
         filteredToys = toys.sort((a, b) => (a.createAt - b.createAt) )
     }
 
+    const totalPages = Math.ceil(filteredToys.length / PAGE_SIZE)
+    const startIdx = filterBy.page * PAGE_SIZE
+    filteredToys = filteredToys.slice(startIdx, startIdx + PAGE_SIZE)
     return filteredToys
 }
 
